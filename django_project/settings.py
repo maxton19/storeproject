@@ -55,6 +55,9 @@ ROOT_URLCONF = 'django_project.urls'
 
 AUTH_USER_MODEL = "accounts.CustomUser" # new
 
+LOGIN_REDIRECT_URL = "home" # new
+LOGOUT_REDIRECT_URL = "home" # new
+
 
 # django_project/settings.py
 DATABASES = {
