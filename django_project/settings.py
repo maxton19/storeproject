@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+from environs import Env # new
+env = Env() # new
+env.read_env() # new
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,10 +23,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-%@^5vf+#ne6vxo8pubj@q@dexixd9vle^!3=%b@^wc*#!9jb0g'
+SECRET_KEY = env("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False # new
+ALLOWED_HOSTS = [".herokuapp.com", "localhost", "127.0.0.1"] # new
+
+DEBUG = env.bool("DJANGO_DEBUG") # new
 
 ALLOWED_HOSTS = []
 
@@ -88,16 +94,12 @@ AUTHENTICATION_BACKENDS = (
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend" 
 
 
+
 # django_project/settings.py
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "postgres",
-        "USER": "postgres",
-        "PASSWORD": "postgres",
-        "HOST": "db",
-        "PORT": 5432,
-    }
+    "default": env.dj_db_url("DATABASE_URL",
+    default="postgres://postgres@db/postgres")
 }
 
 TEMPLATES = [
