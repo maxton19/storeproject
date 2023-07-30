@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     # Third-party
     "crispy_forms", # new
     "crispy_bootstrap5", # new
+    "allauth", # new
+    "allauth.account", # new
+    # Local
     "accounts.apps.AccountsConfig", # new
     "pages.apps.PagesConfig", # new
 ]
@@ -58,9 +61,6 @@ ROOT_URLCONF = 'django_project.urls'
 
 AUTH_USER_MODEL = "accounts.CustomUser" # new
 
-LOGIN_REDIRECT_URL = "home" # new
-LOGOUT_REDIRECT_URL = "home" # new
-
 # django_project/settings.py
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"] # new
@@ -69,6 +69,23 @@ STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage" # 
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5" # new
 CRISPY_TEMPLATE_PACK = "bootstrap5" # new
+
+# django-allauth config
+SITE_ID = 1 # new
+LOGIN_REDIRECT_URL = "home" # new
+ACCOUNT_LOGOUT_REDIRECT = "home" # new
+ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False 
+ACCOUNT_USERNAME_REQUIRED = False # new
+ACCOUNT_AUTHENTICATION_METHOD = "email" # new
+ACCOUNT_EMAIL_REQUIRED = True # new
+ACCOUNT_UNIQUE_EMAIL = True # new
+AUTHENTICATION_BACKENDS = (
+"django.contrib.auth.backends.ModelBackend",
+"allauth.account.auth_backends.AuthenticationBackend", # new
+)
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend" 
 
 
 # django_project/settings.py
